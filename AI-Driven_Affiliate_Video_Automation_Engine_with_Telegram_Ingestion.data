@@ -1,7 +1,7 @@
 {
   "Telegram Video Received": [
     {
-      "startTime": 1771327189302,
+      "startTime": 1771328469647,
       "executionIndex": 0,
       "source": [],
       "hints": [],
@@ -12,9 +12,9 @@
           [
             {
               "json": {
-                "update_id": 202193387,
+                "update_id": 202193388,
                 "message": {
-                  "message_id": 150,
+                  "message_id": 151,
                   "from": {
                     "id": 2047148935,
                     "is_bot": false,
@@ -28,7 +28,7 @@
                     "username": "Jackkk_97",
                     "type": "private"
                   },
-                  "date": 1771327187,
+                  "date": 1771328467,
                   "text": "halo"
                 }
               },
@@ -43,7 +43,7 @@
   ],
   "Extract Telegram Data": [
     {
-      "startTime": 1771327189311,
+      "startTime": 1771328469653,
       "executionIndex": 1,
       "source": [
         {
@@ -53,16 +53,16 @@
         }
       ],
       "hints": [],
-      "executionTime": 9,
+      "executionTime": 19,
       "executionStatus": "success",
       "data": {
         "main": [
           [
             {
               "json": {
-                "update_id": 202193387,
+                "update_id": 202193388,
                 "message": {
-                  "message_id": 150,
+                  "message_id": 151,
                   "from": {
                     "id": 2047148935,
                     "is_bot": false,
@@ -76,13 +76,13 @@
                     "username": "Jackkk_97",
                     "type": "private"
                   },
-                  "date": 1771327187,
+                  "date": 1771328467,
                   "text": "halo"
                 },
                 "telegram_id": 2047148935,
                 "username": "Jackkk_97",
                 "chat_id": 2047148935,
-                "message_id": 150,
+                "message_id": 151,
                 "video_file_id": null,
                 "video_duration": null,
                 "video_width": null,
@@ -99,7 +99,7 @@
   ],
   "Check User Exists": [
     {
-      "startTime": 1771327189322,
+      "startTime": 1771328469677,
       "executionIndex": 2,
       "source": [
         {
@@ -109,7 +109,7 @@
         }
       ],
       "hints": [],
-      "executionTime": 1820,
+      "executionTime": 2085,
       "executionStatus": "success",
       "data": {
         "main": [
@@ -132,7 +132,7 @@
   ],
   "User Exists?": [
     {
-      "startTime": 1771327191143,
+      "startTime": 1771328471763,
       "executionIndex": 3,
       "source": [
         {
@@ -142,7 +142,7 @@
         }
       ],
       "hints": [],
-      "executionTime": 1,
+      "executionTime": 5,
       "executionStatus": "success",
       "data": {
         "main": [
@@ -166,7 +166,7 @@
   ],
   "Prepare User ID": [
     {
-      "startTime": 1771327191144,
+      "startTime": 1771328471769,
       "executionIndex": 4,
       "source": [
         {
@@ -176,7 +176,7 @@
         }
       ],
       "hints": [],
-      "executionTime": 8,
+      "executionTime": 12,
       "executionStatus": "success",
       "data": {
         "main": [
@@ -187,7 +187,7 @@
                 "telegram_id": "2047148935",
                 "username": "Jackkk_97",
                 "chat_id": "2047148935",
-                "message_id": "150",
+                "message_id": "151",
                 "video_file_id": null,
                 "video_duration": null,
                 "video_width": null,
@@ -204,7 +204,7 @@
   ],
   "Router: Message vs Callback": [
     {
-      "startTime": 1771327191155,
+      "startTime": 1771328471783,
       "executionIndex": 5,
       "source": [
         {
@@ -214,7 +214,7 @@
         }
       ],
       "hints": [],
-      "executionTime": 3,
+      "executionTime": 4,
       "executionStatus": "success",
       "data": {
         "main": [
@@ -226,7 +226,7 @@
                 "telegram_id": "2047148935",
                 "username": "Jackkk_97",
                 "chat_id": "2047148935",
-                "message_id": "150",
+                "message_id": "151",
                 "video_file_id": null,
                 "video_duration": null,
                 "video_width": null,
@@ -243,7 +243,7 @@
   ],
   "Parse Callback": [
     {
-      "startTime": 1771327191159,
+      "startTime": 1771328471788,
       "executionIndex": 6,
       "source": [
         {
@@ -253,15 +253,109 @@
         }
       ],
       "hints": [],
-      "executionTime": 172,
+      "executionTime": 368,
+      "executionStatus": "success",
+      "data": {
+        "main": [
+          [
+            {
+              "json": {
+                "error": "No callback query found",
+                "original_item": {
+                  "user_id": "8da5a38e-07e4-4773-aada-e1bae0100731",
+                  "telegram_id": "2047148935",
+                  "username": "Jackkk_97",
+                  "chat_id": "2047148935",
+                  "message_id": "151",
+                  "video_file_id": null,
+                  "video_duration": null,
+                  "video_width": null,
+                  "video_height": null
+                }
+              },
+              "pairedItem": {
+                "item": 0
+              }
+            }
+          ]
+        ]
+      }
+    }
+  ],
+  "Update User Selection": [
+    {
+      "startTime": 1771328472157,
+      "executionIndex": 7,
+      "source": [
+        {
+          "previousNode": "Parse Callback",
+          "previousNodeOutput": 0,
+          "previousNodeRun": 0
+        }
+      ],
+      "hints": [],
+      "executionTime": 967,
       "executionStatus": "error",
       "error": {
-        "level": "error",
+        "level": "warning",
         "tags": {},
-        "description": "TypeError",
-        "lineNumber": 2,
-        "message": "Cannot read properties of undefined (reading 'data') [line 2]",
-        "stack": "TypeError: Cannot read properties of undefined (reading 'data')\n    at VmCodeWrapper (evalmachine.<anonymous>:2:18)\n    at evalmachine.<anonymous>:6:2\n    at Script.runInContext (node:vm:149:12)\n    at runInContext (node:vm:301:6)\n    at result (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/@n8n+task-runner@file+packages+@n8n+task-runner_@opentelemetry+api@1.9.0_@opentelemetry_c2ea36637674b99f45b42fa0a37672ba/node_modules/@n8n/task-runner/dist/js-task-runner/js-task-runner.js:219:61)\n    at new Promise (<anonymous>)\n    at JsTaskRunner.runForAllItems (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/@n8n+task-runner@file+packages+@n8n+task-runner_@opentelemetry+api@1.9.0_@opentelemetry_c2ea36637674b99f45b42fa0a37672ba/node_modules/@n8n/task-runner/dist/js-task-runner/js-task-runner.js:212:34)\n    at JsTaskRunner.executeTask (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/@n8n+task-runner@file+packages+@n8n+task-runner_@opentelemetry+api@1.9.0_@opentelemetry_c2ea36637674b99f45b42fa0a37672ba/node_modules/@n8n/task-runner/dist/js-task-runner/js-task-runner.js:136:26)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async Object.waitingForSettings (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/@n8n+task-runner@file+packages+@n8n+task-runner_@opentelemetry+api@1.9.0_@opentelemetry_c2ea36637674b99f45b42fa0a37672ba/node_modules/@n8n/task-runner/dist/task-runner.js:256:17)"
+        "description": "\"failed to parse logic tree ((id..undefined))\" (line 1, column 7)",
+        "timestamp": 1771328473121,
+        "context": {},
+        "functionality": "regular",
+        "name": "NodeApiError",
+        "node": {
+          "parameters": {
+            "useCustomSchema": false,
+            "resource": "row",
+            "operation": "update",
+            "tableId": "projects",
+            "filterType": "manual",
+            "matchType": "anyFilter",
+            "filters": {
+              "conditions": [
+                {
+                  "keyName": "id",
+                  "condition": "",
+                  "keyValue": "={{ $json.project_id }}"
+                }
+              ]
+            },
+            "dataToSend": "defineBelow",
+            "fieldsUi": {
+              "fieldValues": [
+                {
+                  "fieldId": "preferences",
+                  "fieldValue": "={{ $json.new_preferences }}"
+                },
+                {
+                  "fieldId": "status",
+                  "fieldValue": "={{ $json.next_status }}"
+                }
+              ]
+            }
+          },
+          "id": "7730b908-0a63-4fd7-9a08-03ee5f12dccf",
+          "name": "Update User Selection",
+          "type": "n8n-nodes-base.supabase",
+          "typeVersion": 1,
+          "position": [
+            2608,
+            336
+          ],
+          "credentials": {
+            "supabaseApi": {
+              "id": "zzWgQHlA9X1EO3Lv",
+              "name": "Supabase account"
+            }
+          }
+        },
+        "messages": [
+          "400 - {\"code\":\"PGRST100\",\"details\":\"unexpected \\\".\\\" expecting \\\"not\\\" or operator (eq, gt, ...)\",\"hint\":null,\"message\":\"\\\"failed to parse logic tree ((id..undefined))\\\" (line 1, column 7)\"}"
+        ],
+        "httpCode": "400",
+        "message": "Bad request - please check your parameters: \"failed to parse logic tree ((id..undefined))\" (line 1, column 7)",
+        "stack": "NodeApiError: Bad request - please check your parameters: \"failed to parse logic tree ((id..undefined))\" (line 1, column 7)\n    at ExecuteContext.requestWithAuthentication (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file+packages+core_@opentelemetry+api@1.9.0_@opentelemetry+exporter-trace-otlp_4dbefa9881a7c57a9e05a20ce4387c10/node_modules/n8n-core/src/execution-engine/node-execution-context/utils/request-helper-functions.ts:1531:10)\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at ExecuteContext.requestWithAuthentication (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file+packages+core_@opentelemetry+api@1.9.0_@opentelemetry+exporter-trace-otlp_4dbefa9881a7c57a9e05a20ce4387c10/node_modules/n8n-core/src/execution-engine/node-execution-context/utils/request-helper-functions.ts:1831:11)\n    at ExecuteContext.supabaseApiRequest (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-nodes-base@file+packages+nodes-base_@aws-sdk+credential-providers@3.808.0_asn1.js@5_8da18263ca0574b0db58d4fefd8173ce/node_modules/n8n-nodes-base/nodes/Supabase/GenericFunctions.ts:80:10)\n    at ExecuteContext.execute (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-nodes-base@file+packages+nodes-base_@aws-sdk+credential-providers@3.808.0_asn1.js@5_8da18263ca0574b0db58d4fefd8173ce/node_modules/n8n-nodes-base/nodes/Supabase/Supabase.node.ts:472:20)\n    at WorkflowExecute.executeNode (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file+packages+core_@opentelemetry+api@1.9.0_@opentelemetry+exporter-trace-otlp_4dbefa9881a7c57a9e05a20ce4387c10/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:1039:8)\n    at WorkflowExecute.runNode (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file+packages+core_@opentelemetry+api@1.9.0_@opentelemetry+exporter-trace-otlp_4dbefa9881a7c57a9e05a20ce4387c10/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:1218:11)\n    at /usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file+packages+core_@opentelemetry+api@1.9.0_@opentelemetry+exporter-trace-otlp_4dbefa9881a7c57a9e05a20ce4387c10/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:1653:27\n    at /usr/local/lib/node_modules/n8n/node_modules/.pnpm/n8n-core@file+packages+core_@opentelemetry+api@1.9.0_@opentelemetry+exporter-trace-otlp_4dbefa9881a7c57a9e05a20ce4387c10/node_modules/n8n-core/src/execution-engine/workflow-execute.ts:2296:11"
       }
     }
   ]
