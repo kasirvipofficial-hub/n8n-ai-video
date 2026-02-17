@@ -1,0 +1,268 @@
+{
+  "Telegram Video Received": [
+    {
+      "startTime": 1771327189302,
+      "executionIndex": 0,
+      "source": [],
+      "hints": [],
+      "executionTime": 2,
+      "executionStatus": "success",
+      "data": {
+        "main": [
+          [
+            {
+              "json": {
+                "update_id": 202193387,
+                "message": {
+                  "message_id": 150,
+                  "from": {
+                    "id": 2047148935,
+                    "is_bot": false,
+                    "first_name": "Mas jackk",
+                    "username": "Jackkk_97",
+                    "language_code": "en"
+                  },
+                  "chat": {
+                    "id": 2047148935,
+                    "first_name": "Mas jackk",
+                    "username": "Jackkk_97",
+                    "type": "private"
+                  },
+                  "date": 1771327187,
+                  "text": "halo"
+                }
+              },
+              "pairedItem": {
+                "item": 0
+              }
+            }
+          ]
+        ]
+      }
+    }
+  ],
+  "Extract Telegram Data": [
+    {
+      "startTime": 1771327189311,
+      "executionIndex": 1,
+      "source": [
+        {
+          "previousNode": "Telegram Video Received",
+          "previousNodeOutput": 0,
+          "previousNodeRun": 0
+        }
+      ],
+      "hints": [],
+      "executionTime": 9,
+      "executionStatus": "success",
+      "data": {
+        "main": [
+          [
+            {
+              "json": {
+                "update_id": 202193387,
+                "message": {
+                  "message_id": 150,
+                  "from": {
+                    "id": 2047148935,
+                    "is_bot": false,
+                    "first_name": "Mas jackk",
+                    "username": "Jackkk_97",
+                    "language_code": "en"
+                  },
+                  "chat": {
+                    "id": 2047148935,
+                    "first_name": "Mas jackk",
+                    "username": "Jackkk_97",
+                    "type": "private"
+                  },
+                  "date": 1771327187,
+                  "text": "halo"
+                },
+                "telegram_id": 2047148935,
+                "username": "Jackkk_97",
+                "chat_id": 2047148935,
+                "message_id": 150,
+                "video_file_id": null,
+                "video_duration": null,
+                "video_width": null,
+                "video_height": null
+              },
+              "pairedItem": {
+                "item": 0
+              }
+            }
+          ]
+        ]
+      }
+    }
+  ],
+  "Check User Exists": [
+    {
+      "startTime": 1771327189322,
+      "executionIndex": 2,
+      "source": [
+        {
+          "previousNode": "Extract Telegram Data",
+          "previousNodeOutput": 0,
+          "previousNodeRun": 0
+        }
+      ],
+      "hints": [],
+      "executionTime": 1820,
+      "executionStatus": "success",
+      "data": {
+        "main": [
+          [
+            {
+              "json": {
+                "id": "8da5a38e-07e4-4773-aada-e1bae0100731",
+                "telegram_id": 2047148935,
+                "username": "Jackkk_97",
+                "created_at": "2026-02-16T14:49:58.757799+00:00"
+              },
+              "pairedItem": {
+                "item": 0
+              }
+            }
+          ]
+        ]
+      }
+    }
+  ],
+  "User Exists?": [
+    {
+      "startTime": 1771327191143,
+      "executionIndex": 3,
+      "source": [
+        {
+          "previousNode": "Check User Exists",
+          "previousNodeOutput": 0,
+          "previousNodeRun": 0
+        }
+      ],
+      "hints": [],
+      "executionTime": 1,
+      "executionStatus": "success",
+      "data": {
+        "main": [
+          [
+            {
+              "json": {
+                "id": "8da5a38e-07e4-4773-aada-e1bae0100731",
+                "telegram_id": 2047148935,
+                "username": "Jackkk_97",
+                "created_at": "2026-02-16T14:49:58.757799+00:00"
+              },
+              "pairedItem": {
+                "item": 0
+              }
+            }
+          ],
+          []
+        ]
+      }
+    }
+  ],
+  "Prepare User ID": [
+    {
+      "startTime": 1771327191144,
+      "executionIndex": 4,
+      "source": [
+        {
+          "previousNode": "User Exists?",
+          "previousNodeOutput": 0,
+          "previousNodeRun": 0
+        }
+      ],
+      "hints": [],
+      "executionTime": 8,
+      "executionStatus": "success",
+      "data": {
+        "main": [
+          [
+            {
+              "json": {
+                "user_id": "8da5a38e-07e4-4773-aada-e1bae0100731",
+                "telegram_id": "2047148935",
+                "username": "Jackkk_97",
+                "chat_id": "2047148935",
+                "message_id": "150",
+                "video_file_id": null,
+                "video_duration": null,
+                "video_width": null,
+                "video_height": null
+              },
+              "pairedItem": {
+                "item": 0
+              }
+            }
+          ]
+        ]
+      }
+    }
+  ],
+  "Router: Message vs Callback": [
+    {
+      "startTime": 1771327191155,
+      "executionIndex": 5,
+      "source": [
+        {
+          "previousNode": "Prepare User ID",
+          "previousNodeOutput": 0,
+          "previousNodeRun": 0
+        }
+      ],
+      "hints": [],
+      "executionTime": 3,
+      "executionStatus": "success",
+      "data": {
+        "main": [
+          [],
+          [
+            {
+              "json": {
+                "user_id": "8da5a38e-07e4-4773-aada-e1bae0100731",
+                "telegram_id": "2047148935",
+                "username": "Jackkk_97",
+                "chat_id": "2047148935",
+                "message_id": "150",
+                "video_file_id": null,
+                "video_duration": null,
+                "video_width": null,
+                "video_height": null
+              },
+              "pairedItem": {
+                "item": 0
+              }
+            }
+          ]
+        ]
+      }
+    }
+  ],
+  "Parse Callback": [
+    {
+      "startTime": 1771327191159,
+      "executionIndex": 6,
+      "source": [
+        {
+          "previousNode": "Router: Message vs Callback",
+          "previousNodeOutput": 1,
+          "previousNodeRun": 0
+        }
+      ],
+      "hints": [],
+      "executionTime": 172,
+      "executionStatus": "error",
+      "error": {
+        "level": "error",
+        "tags": {},
+        "description": "TypeError",
+        "lineNumber": 2,
+        "message": "Cannot read properties of undefined (reading 'data') [line 2]",
+        "stack": "TypeError: Cannot read properties of undefined (reading 'data')\n    at VmCodeWrapper (evalmachine.<anonymous>:2:18)\n    at evalmachine.<anonymous>:6:2\n    at Script.runInContext (node:vm:149:12)\n    at runInContext (node:vm:301:6)\n    at result (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/@n8n+task-runner@file+packages+@n8n+task-runner_@opentelemetry+api@1.9.0_@opentelemetry_c2ea36637674b99f45b42fa0a37672ba/node_modules/@n8n/task-runner/dist/js-task-runner/js-task-runner.js:219:61)\n    at new Promise (<anonymous>)\n    at JsTaskRunner.runForAllItems (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/@n8n+task-runner@file+packages+@n8n+task-runner_@opentelemetry+api@1.9.0_@opentelemetry_c2ea36637674b99f45b42fa0a37672ba/node_modules/@n8n/task-runner/dist/js-task-runner/js-task-runner.js:212:34)\n    at JsTaskRunner.executeTask (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/@n8n+task-runner@file+packages+@n8n+task-runner_@opentelemetry+api@1.9.0_@opentelemetry_c2ea36637674b99f45b42fa0a37672ba/node_modules/@n8n/task-runner/dist/js-task-runner/js-task-runner.js:136:26)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async Object.waitingForSettings (/usr/local/lib/node_modules/n8n/node_modules/.pnpm/@n8n+task-runner@file+packages+@n8n+task-runner_@opentelemetry+api@1.9.0_@opentelemetry_c2ea36637674b99f45b42fa0a37672ba/node_modules/@n8n/task-runner/dist/task-runner.js:256:17)"
+      }
+    }
+  ]
+}

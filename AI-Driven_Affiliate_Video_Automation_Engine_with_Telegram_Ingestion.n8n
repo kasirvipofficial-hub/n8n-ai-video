@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-02-17T08:11:34.808Z",
+  "updatedAt": "2026-02-17T11:19:55.302Z",
   "createdAt": "2026-02-17T08:02:16.409Z",
   "id": "d1uuHdrFwhViqDUk",
   "name": "AI-Driven Affiliate Video Automation Engine with Telegram Ingestion",
@@ -20,8 +20,8 @@
       "type": "n8n-nodes-base.telegramTrigger",
       "typeVersion": 1.2,
       "position": [
-        -192,
-        352
+        848,
+        144
       ],
       "webhookId": "930969b7-847d-4ac2-8937-14cefba3a158",
       "credentials": {
@@ -56,7 +56,7 @@
             {
               "id": "id-4",
               "name": "webhook_callback_url",
-              "value": "https://clipperai.app.n8n.cloud/webhook/d84bd2f4-4f64-403f-b837-a48db3195bc2",
+              "value": "https://n8n.sarungtambalan.my.id/webhook/d84bd2f4-4f64-403f-b837-a48db3195bc2",
               "type": "string"
             }
           ]
@@ -69,8 +69,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1456,
-        336
+        1296,
+        592
       ]
     },
     {
@@ -135,8 +135,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1968,
-        336
+        1072,
+        368
       ],
       "alwaysOutputData": true
     },
@@ -159,10 +159,16 @@
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
       "position": [
-        2192,
-        336
+        1296,
+        368
       ],
-      "alwaysOutputData": true
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
     },
     {
       "parameters": {
@@ -193,8 +199,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        2416,
-        336
+        1520,
+        368
       ]
     },
     {
@@ -218,9 +224,15 @@
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
       "position": [
-        2656,
-        416
-      ]
+        1744,
+        528
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
     },
     {
       "parameters": {
@@ -289,66 +301,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        2864,
-        320
-      ]
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "id-1",
-              "name": "user_id",
-              "value": "={{ $json.user_id }}",
-              "type": "string"
-            },
-            {
-              "id": "id-2",
-              "name": "title",
-              "value": "={{ 'Telegram Video ' + new Date().toISOString() }}",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "05c8f29b-fb25-47dd-b8d3-6c28c8a28bf5",
-      "name": "Prepare Project Data",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        3088,
-        320
-      ]
-    },
-    {
-      "parameters": {
-        "tableId": "projects",
-        "fieldsUi": {
-          "fieldValues": [
-            {
-              "fieldId": "user_id",
-              "fieldValue": "={{ $json.user_id }}"
-            },
-            {
-              "fieldId": "title",
-              "fieldValue": "={{ $json.title }}"
-            },
-            {
-              "fieldId": "status",
-              "fieldValue": "ingested"
-            }
-          ]
-        }
-      },
-      "id": "eb750e58-d3ec-4e4b-bc16-5ff35ab67a5d",
-      "name": "Create Project (status=ingested)",
-      "type": "n8n-nodes-base.supabase",
-      "typeVersion": 1,
-      "position": [
-        3312,
-        320
+        1968,
+        352
       ]
     },
     {
@@ -432,7 +386,13 @@
       "position": [
         4656,
         320
-      ]
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
     },
     {
       "parameters": {
@@ -509,7 +469,13 @@
       "position": [
         5328,
         320
-      ]
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
     },
     {
       "parameters": {
@@ -557,7 +523,13 @@
       "position": [
         6896,
         320
-      ]
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
     },
     {
       "parameters": {
@@ -592,7 +564,13 @@
       "position": [
         7120,
         320
-      ]
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
     },
     {
       "parameters": {
@@ -654,7 +632,13 @@
       "position": [
         8240,
         224
-      ]
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
     },
     {
       "parameters": {
@@ -702,7 +686,13 @@
       "position": [
         9808,
         320
-      ]
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
     },
     {
       "parameters": {
@@ -733,7 +723,13 @@
       "position": [
         10032,
         320
-      ]
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
     },
     {
       "parameters": {
@@ -748,7 +744,7 @@
             {
               "id": "id-2",
               "name": "payload",
-              "value": "={{ { video_url: $('Fetch Project Before Render').item.json.assets?.find(a => a.type === 'raw_video')?.r2_url, audio_url: $('Fetch Project Before Render').item.json.assets?.find(a => a.type === 'voice_over')?.r2_url, text_overlay: JSON.parse($('Fetch Project Before Render').item.json.ai_result || '{}').script || '', callback_url: 'https://clipperai.app.n8n.cloud/webhook/d84bd2f4-4f64-403f-b837-a48db3195bc2' } }}",
+              "value": "={{ { video_url: $('Fetch Project Before Render').item.json.assets?.find(a => a.type === 'raw_video')?.r2_url, audio_url: $('Fetch Project Before Render').item.json.assets?.find(a => a.type === 'voice_over')?.r2_url, text_overlay: JSON.parse($('Fetch Project Before Render').item.json.ai_result || '{}').script || '', callback_url: $('Workflow Configuration').item.json.webhook_callback_url } }}",
               "type": "object"
             }
           ]
@@ -795,7 +791,13 @@
       "position": [
         11376,
         128
-      ]
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
     },
     {
       "parameters": {
@@ -835,8 +837,8 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        -208,
-        -224
+        848,
+        -80
       ],
       "webhookId": "d84bd2f4-4f64-403f-b837-a48db3195bc2"
     },
@@ -883,8 +885,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        16,
-        -224
+        1072,
+        -80
       ]
     },
     {
@@ -913,8 +915,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        672,
-        -320
+        1728,
+        -176
       ]
     },
     {
@@ -942,9 +944,15 @@
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
       "position": [
-        864,
-        -320
-      ]
+        1920,
+        -176
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
     },
     {
       "parameters": {
@@ -955,8 +963,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1088,
-        -320
+        2144,
+        -176
       ]
     },
     {
@@ -985,8 +993,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        1296,
-        -320
+        2352,
+        -176
       ]
     },
     {
@@ -1032,8 +1040,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        864,
-        -320
+        1920,
+        -176
       ]
     },
     {
@@ -1065,9 +1073,15 @@
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
       "position": [
-        1296,
-        -320
-      ]
+        2352,
+        -176
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
     },
     {
       "parameters": {
@@ -1100,9 +1114,15 @@
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
       "position": [
-        1520,
-        -320
-      ]
+        2576,
+        -176
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
     },
     {
       "parameters": {
@@ -1131,9 +1151,15 @@
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
       "position": [
-        1744,
-        -320
-      ]
+        2800,
+        -176
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
     },
     {
       "parameters": {
@@ -1146,8 +1172,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1968,
-        -320
+        3024,
+        -176
       ],
       "webhookId": "79d4f889-56e8-4db2-ad54-0a0153f51f8d",
       "credentials": {
@@ -1166,8 +1192,8 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.5,
       "position": [
-        2192,
-        -320
+        3248,
+        -176
       ]
     },
     {
@@ -1216,7 +1242,13 @@
       "position": [
         6672,
         128
-      ]
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
     },
     {
       "parameters": {
@@ -1247,12 +1279,18 @@
       "position": [
         6896,
         128
-      ]
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
     },
     {
       "parameters": {
         "chatId": "={{ $('Telegram Video Received').item.json.message.chat.id }}",
-        "text": "={{ '❌ Error processing your video: ' + ($json.error || 'Unknown error occurred') }}",
+        "text": "={{ '��� Error processing your video: ' + ($json.error || 'Unknown error occurred') }}",
         "additionalFields": {}
       },
       "id": "ab5436db-e7d1-4593-9008-4153a57dd42d",
@@ -1291,7 +1329,13 @@
       "position": [
         5552,
         320
-      ]
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
     },
     {
       "parameters": {
@@ -1346,7 +1390,13 @@
       "position": [
         7568,
         320
-      ]
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
     },
     {
       "parameters": {
@@ -1401,7 +1451,13 @@
       "position": [
         10480,
         224
-      ]
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
     },
     {
       "parameters": {
@@ -1454,9 +1510,15 @@
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
       "position": [
-        240,
-        -224
-      ]
+        1296,
+        -80
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
     },
     {
       "parameters": {
@@ -1495,8 +1557,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        448,
-        -224
+        1504,
+        -80
       ]
     },
     {
@@ -1530,9 +1592,15 @@
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
       "position": [
-        672,
-        -128
-      ]
+        1728,
+        16
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
     },
     {
       "parameters": {
@@ -1543,8 +1611,8 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.5,
       "position": [
-        864,
-        -128
+        1920,
+        16
       ]
     },
     {
@@ -1580,7 +1648,13 @@
       "position": [
         6224,
         416
-      ]
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
     },
     {
       "parameters": {
@@ -1628,7 +1702,13 @@
       "position": [
         8016,
         416
-      ]
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
     },
     {
       "parameters": {
@@ -1676,7 +1756,13 @@
       "position": [
         11152,
         320
-      ]
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
     },
     {
       "parameters": {
@@ -1724,7 +1810,13 @@
       "position": [
         9360,
         96
-      ]
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
     },
     {
       "parameters": {
@@ -1755,7 +1847,13 @@
       "position": [
         9584,
         96
-      ]
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
     },
     {
       "parameters": {
@@ -1812,7 +1910,13 @@
       "position": [
         12064,
         128
-      ]
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
     },
     {
       "parameters": {
@@ -1843,7 +1947,13 @@
       "position": [
         12288,
         128
-      ]
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
     },
     {
       "parameters": {
@@ -1898,9 +2008,15 @@
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
       "position": [
-        -208,
-        848
-      ]
+        3360,
+        -448
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
     },
     {
       "parameters": {
@@ -1929,9 +2045,15 @@
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
       "position": [
-        16,
-        848
-      ]
+        3552,
+        -448
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
     },
     {
       "parameters": {
@@ -1944,8 +2066,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        240,
-        848
+        3760,
+        -448
       ],
       "webhookId": "18a703cd-1fc3-46de-bc0a-88b913dc6eb1",
       "credentials": {
@@ -2222,8 +2344,8 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        464,
-        848
+        3936,
+        -448
       ]
     },
     {
@@ -2291,8 +2413,8 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.4,
       "position": [
-        1136,
-        688
+        848,
+        800
       ]
     },
     {
@@ -2306,8 +2428,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1456,
-        704
+        1296,
+        816
       ],
       "webhookId": "cc18852f-1d6e-4227-a298-5b9d628d85ed",
       "credentials": {
@@ -2330,8 +2452,8 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3.1,
       "position": [
-        1744,
-        736
+        848,
+        1072
       ]
     },
     {
@@ -2349,8 +2471,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.3,
       "position": [
-        1744,
-        912
+        848,
+        1248
       ]
     },
     {
@@ -2364,8 +2486,8 @@
       "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
       "typeVersion": 1.3,
       "position": [
-        1840,
-        1056
+        944,
+        1392
       ]
     },
     {
@@ -2379,8 +2501,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        2048,
-        736
+        1296,
+        1072
       ],
       "webhookId": "a3f20cbf-c6ae-4fc9-9315-20e6a02d9a8f",
       "credentials": {
@@ -2401,8 +2523,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1744,
-        336
+        848,
+        368
       ],
       "webhookId": "cd9bfe94-bfdb-4132-9ebd-ed5c585a5424",
       "alwaysOutputData": true,
@@ -2517,7 +2639,13 @@
         320
       ],
       "id": "e4a06004-30ba-443c-a3a8-d4150966ee0e",
-      "name": "Upload a file"
+      "name": "Upload a file",
+      "credentials": {
+        "s3": {
+          "id": "rYr4MEwA5oesjyaU",
+          "name": "S3 account"
+        }
+      }
     },
     {
       "parameters": {
@@ -2559,7 +2687,13 @@
       "position": [
         8464,
         128
-      ]
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
     },
     {
       "parameters": {
@@ -2682,7 +2816,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        16,
+        2176,
         352
       ]
     },
@@ -2715,9 +2849,15 @@
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
       "position": [
-        240,
+        2400,
         528
-      ]
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
     },
     {
       "parameters": {
@@ -2749,20 +2889,26 @@
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
       "position": [
-        448,
+        2608,
         336
-      ]
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
     },
     {
       "parameters": {
-        "jsCode": "const cb = items[0].json.callback_query;\\nconst parts = cb.data.split('_');\\nconst prefix = parts[0];\\nconst value = parts[1];\\nreturn [{ json: { callback: cb, prefix, value } }];"
+        "jsCode": "let cb = items[0].json.callback_query;\n\n// Fallback: Try to get from trigger node if missing in current item\nif (!cb) {\n  try {\n    cb = $('Telegram Video Received').first().json.callback_query;\n  } catch (e) {\n    // Ignore error if node not found or empty\n  }\n}\n\nif (!cb || !cb.data) {\n  return [{ json: { error: 'No callback query found', original_item: items[0].json } }];\n}\n\nconst parts = cb.data.split('_');\nconst prefix = parts[0];\nconst value = parts[1];\nreturn [{ json: { callback: cb, prefix, value } }];"
       },
       "id": "10d6ab1a-23b9-4c66-acd6-08220c98c30a",
       "name": "Parse Callback",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        240,
+        2400,
         336
       ]
     },
@@ -2775,7 +2921,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        672,
+        2832,
         336
       ]
     },
@@ -2809,7 +2955,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        880,
+        3040,
         336
       ]
     },
@@ -2830,7 +2976,7 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        448,
+        2608,
         528
       ],
       "webhookId": "init-wizard-webhook",
@@ -2860,7 +3006,7 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1136,
+        3296,
         224
       ],
       "webhookId": "2bbe9f2d-8e78-44e1-959a-7cbf47aea0da",
@@ -2897,9 +3043,15 @@
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
       "position": [
-        1136,
+        3296,
         448
-      ]
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
     }
   ],
   "connections": {
@@ -3083,28 +3235,6 @@
         [
           {
             "node": "Router: Message vs Callback",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Prepare Project Data": {
-      "main": [
-        [
-          {
-            "node": "Create Project (status=ingested)",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Create Project (status=ingested)": {
-      "main": [
-        [
-          {
-            "node": "Bridge Video Data",
             "type": "main",
             "index": 0
           }
@@ -3974,9 +4104,9 @@
   "staticData": null,
   "meta": null,
   "pinData": {},
-  "versionId": "77a74494-ab50-4043-b0cf-4b7cffdbb01e",
+  "versionId": "f450d75e-baef-4b91-b708-3e17b17fd89e",
   "activeVersionId": null,
-  "versionCounter": 2,
+  "versionCounter": 61,
   "triggerCount": 0,
   "shared": [
     {
@@ -4001,7 +4131,7 @@
             "userId": "a608e98a-990b-4322-8f6d-0c729e6b0102",
             "projectId": "3ymR0iHxptXy6Sor",
             "user": {
-              "updatedAt": "2026-02-17T08:02:22.660Z",
+              "updatedAt": "2026-02-17T10:48:37.000Z",
               "createdAt": "2026-02-17T07:58:27.841Z",
               "id": "a608e98a-990b-4322-8f6d-0c729e6b0102",
               "email": "kasirvipofficial@gmail.com",
