@@ -1,0 +1,4168 @@
+{
+  "updatedAt": "2026-02-17T11:19:55.302Z",
+  "createdAt": "2026-02-17T08:02:16.409Z",
+  "id": "d1uuHdrFwhViqDUk",
+  "name": "AI-Driven Affiliate Video Automation Engine with Telegram Ingestion",
+  "description": null,
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message",
+          "callback_query"
+        ],
+        "additionalFields": {}
+      },
+      "id": "6fb645ac-84e5-4d0b-89ae-826110b95cee",
+      "name": "Telegram Video Received",
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        848,
+        144
+      ],
+      "webhookId": "930969b7-847d-4ac2-8937-14cefba3a158",
+      "credentials": {
+        "telegramApi": {
+          "id": "zKxiLvRbueIfvKt5",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "id-1",
+              "name": "r2_bucket_url",
+              "value": "https://cdn-aidriven.sarungtambalan.my.id",
+              "type": "string"
+            },
+            {
+              "id": "id-2",
+              "name": "r2_bucket_name",
+              "value": "telegramvideoai",
+              "type": "string"
+            },
+            {
+              "id": "id-3",
+              "name": "ffmpeg_server_url",
+              "value": "https://fe.sarungtambalan.my.id/render",
+              "type": "string"
+            },
+            {
+              "id": "id-4",
+              "name": "webhook_callback_url",
+              "value": "https://n8n.sarungtambalan.my.id/webhook/d84bd2f4-4f64-403f-b837-a48db3195bc2",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "d4409467-078c-4788-85fc-85387ddd0c66",
+      "name": "Workflow Configuration",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1296,
+        592
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "id-1",
+              "name": "telegram_id",
+              "value": "={{ $('Telegram Video Received').item.json.message?.from?.id || $('Telegram Video Received').item.json.from?.id || $('Telegram Video Received').item.json.id }}",
+              "type": "number"
+            },
+            {
+              "id": "id-2",
+              "name": "username",
+              "value": "={{ $('Telegram Video Received').item.json.message?.from?.username || $('Telegram Video Received').item.json.message?.from?.first_name || $('Telegram Video Received').item.json.from?.username || $('Telegram Video Received').item.json.from?.first_name || 'Unknown' }}",
+              "type": "string"
+            },
+            {
+              "id": "id-3",
+              "name": "chat_id",
+              "value": "={{ $('Telegram Video Received').item.json.message?.chat?.id || $('Telegram Video Received').item.json.chat?.id }}",
+              "type": "number"
+            },
+            {
+              "id": "id-4",
+              "name": "message_id",
+              "value": "={{ $('Telegram Video Received').item.json.message?.message_id || $('Telegram Video Received').item.json.message_id }}",
+              "type": "number"
+            },
+            {
+              "id": "id-5",
+              "name": "video_file_id",
+              "value": "={{ $('Telegram Video Received').item.json.message?.video?.file_id || $('Telegram Video Received').item.json.video?.file_id }}",
+              "type": "string"
+            },
+            {
+              "id": "id-6",
+              "name": "video_duration",
+              "value": "={{ $('Telegram Video Received').item.json.message?.video?.duration || $('Telegram Video Received').item.json.video?.duration }}",
+              "type": "number"
+            },
+            {
+              "id": "id-7",
+              "name": "video_width",
+              "value": "={{ $('Telegram Video Received').item.json.message?.video?.width || $('Telegram Video Received').item.json.video?.width }}",
+              "type": "number"
+            },
+            {
+              "id": "id-8",
+              "name": "video_height",
+              "value": "={{ $('Telegram Video Received').item.json.message?.video?.height || $('Telegram Video Received').item.json.video?.height }}",
+              "type": "number"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "6e0d5f61-32e0-4048-a67c-cecd68e0560f",
+      "name": "Extract Telegram Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1072,
+        368
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "users",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "telegram_id",
+              "condition": "eq",
+              "keyValue": "={{ Number($json.telegram_id) }}"
+            }
+          ]
+        }
+      },
+      "id": "8bb09480-d308-4989-8b21-14ebdcab784b",
+      "name": "Check User Exists",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1296,
+        368
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "id-1",
+              "leftValue": "{{ $json.id }}",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "d160eecb-77d3-4b1e-8c3d-145cdcbcb647",
+      "name": "User Exists?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1520,
+        368
+      ]
+    },
+    {
+      "parameters": {
+        "tableId": "users",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "telegram_id",
+              "fieldValue": "={{ Number($('Extract Telegram Data').item.json.telegram_id) }}"
+            },
+            {
+              "fieldId": "username",
+              "fieldValue": "={{ $('Extract Telegram Data').item.json.username || 'Unknown' }}"
+            }
+          ]
+        }
+      },
+      "id": "87416aa1-b9f0-47a6-b930-5386b20ce09f",
+      "name": "Create New User",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1744,
+        528
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "id-1",
+              "name": "user_id",
+              "value": "={{ $('Check User Exists').item.json.id || $('Create New User').item.json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "id-2",
+              "name": "telegram_id",
+              "value": "={{ $('Extract Telegram Data').item.json.telegram_id }}",
+              "type": "string"
+            },
+            {
+              "id": "id-3",
+              "name": "username",
+              "value": "={{ $('Extract Telegram Data').item.json.username }}",
+              "type": "string"
+            },
+            {
+              "id": "id-4",
+              "name": "chat_id",
+              "value": "={{ $('Extract Telegram Data').item.json.chat_id }}",
+              "type": "string"
+            },
+            {
+              "id": "id-5",
+              "name": "message_id",
+              "value": "={{ $('Extract Telegram Data').item.json.message_id }}",
+              "type": "string"
+            },
+            {
+              "id": "id-6",
+              "name": "video_file_id",
+              "value": "={{ $('Extract Telegram Data').item.json.video_file_id }}",
+              "type": "string"
+            },
+            {
+              "id": "id-7",
+              "name": "video_duration",
+              "value": "={{ $('Extract Telegram Data').item.json.video_duration }}",
+              "type": "number"
+            },
+            {
+              "id": "id-8",
+              "name": "video_width",
+              "value": "={{ $('Extract Telegram Data').item.json.video_width }}",
+              "type": "number"
+            },
+            {
+              "id": "id-9",
+              "name": "video_height",
+              "value": "={{ $('Extract Telegram Data').item.json.video_height }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "0e6d3abe-0bc9-4122-971a-dcb838a9066b",
+      "name": "Prepare User ID",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1968,
+        352
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "video_to_split",
+        "include": "allOtherFields",
+        "options": {}
+      },
+      "id": "b57ab426-4ee9-41c9-9302-17e6d550175e",
+      "name": "Split Video Files",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        3760,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "id-1",
+              "name": "project_id",
+              "value": "={{ $('Create Project (status=ingested)').item.json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "id-2",
+              "name": "r2_url",
+              "value": "={{ 'https://pub-320799089d11478aa6d3eae82057bd47.r2.dev/raw/' + $('Create Project (status=ingested)').item.json.id + '/' + $('Get a file').item.json.result.file_id + '.mp4' }}",
+              "type": "string"
+            },
+            {
+              "id": "id-3",
+              "name": "metadata",
+              "value": "={{ { file_id: $('Get a file').item.json.result.file_id, file_size: $('Get a file').item.json.result.file_size, duration: $('Bridge Video Data').item.json.video_duration, width: $('Bridge Video Data').item.json.video_width, height: $('Bridge Video Data').item.json.video_height } }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "072193a3-e2a5-4659-bbff-28c7ecdb67f2",
+      "name": "Prepare Asset Record",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        4432,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "tableId": "assets",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "project_id",
+              "fieldValue": "={{ $json.project_id }}"
+            },
+            {
+              "fieldId": "type",
+              "fieldValue": "raw_video"
+            },
+            {
+              "fieldId": "r2_url",
+              "fieldValue": "={{ $json.r2_url }}"
+            },
+            {
+              "fieldId": "metadata",
+              "fieldValue": "={{ $json.metadata }}"
+            }
+          ]
+        }
+      },
+      "id": "089d53bb-ce7b-47fa-822f-fa8273edd72d",
+      "name": "Insert Asset (type=raw_video)",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        4656,
+        320
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "all_assets",
+        "options": {}
+      },
+      "id": "59e868a6-a9fd-4e2c-9410-9fb60f9643fe",
+      "name": "Aggregate All Assets",
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        4880,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "id-1",
+              "name": "project_id",
+              "value": "={{ $('Create Project (status=ingested)').item.json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "id-2",
+              "name": "payload",
+              "value": "={{ { assets: $json.all_assets, project_data: $('Create Project (status=ingested)').item.json } }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "70846956-1a36-488c-a72e-3d89e5a435fc",
+      "name": "Prepare Vision Job",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        5104,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "tableId": "jobs",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "project_id",
+              "fieldValue": "={{ $json.project_id }}"
+            },
+            {
+              "fieldId": "job_type",
+              "fieldValue": "vision"
+            },
+            {
+              "fieldId": "status",
+              "fieldValue": "running"
+            },
+            {
+              "fieldId": "payload",
+              "fieldValue": "={{ $json.payload }}"
+            }
+          ]
+        }
+      },
+      "id": "620610ae-aa9f-48e1-ba91-85955d803ecb",
+      "name": "Create Vision Job (status=running)",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        5328,
+        320
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = items[0].json.ai_result;\nlet structured;\ntry {\n  if (typeof raw === 'string') {\n     // Remove markdown code blocks if present\n     const clean = raw.replace(/```json/g, '').replace(/```/g, '').trim();\n     structured = JSON.parse(clean);\n  } else {\n     structured = raw;\n  }\n} catch (e) {\n  structured = { error: 'Failed to parse JSON', raw: raw };\n}\n\n// Ensure we have the expected fields or defaults\nif (!structured.segments) structured.segments = [];\nif (!structured.script) structured.script = \"\";\n\nreturn [{ json: { ai_result: structured, project_id: items[0].json.project_id, job_id: items[0].json.job_id } }];"
+      },
+      "id": "335e0c50-fb34-4181-bcb0-becfec153f73",
+      "name": "Structure Vision Result",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6672,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "jobs",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $json.job_id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "status",
+              "fieldValue": "done"
+            },
+            {
+              "fieldId": "result",
+              "fieldValue": "={{ $json.ai_result }}"
+            }
+          ]
+        }
+      },
+      "id": "ccac500d-4e0d-4148-940d-e2423052eb91",
+      "name": "Update Vision Job (status=done)",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        6896,
+        320
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "projects",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $json.project_id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "status",
+              "fieldValue": "analyzing"
+            },
+            {
+              "fieldId": "ai_result",
+              "fieldValue": "={{ $json.ai_result }}"
+            }
+          ]
+        }
+      },
+      "id": "d8e80b4b-b798-4d26-866a-b71eab6eea0d",
+      "name": "Update Project (status=analyzing, ai_result)",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        7120,
+        320
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "id-1",
+              "name": "project_id",
+              "value": "={{ $('Fetch Project Before TTS').item.json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "id-2",
+              "name": "payload",
+              "value": "={{ $json.ai_result.script }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "8c7f4ee3-f7ca-47f8-bda9-dee18e147f98",
+      "name": "Prepare TTS Job",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        8016,
+        224
+      ]
+    },
+    {
+      "parameters": {
+        "tableId": "jobs",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "project_id",
+              "fieldValue": "={{ $json.project_id }}"
+            },
+            {
+              "fieldId": "job_type",
+              "fieldValue": "tts"
+            },
+            {
+              "fieldId": "status",
+              "fieldValue": "running"
+            },
+            {
+              "fieldId": "payload",
+              "fieldValue": "={{ $json.payload }}"
+            }
+          ]
+        }
+      },
+      "id": "d9d18669-2ff8-4e36-a9a2-f6fa59264390",
+      "name": "Create TTS Job (status=running)",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        8240,
+        224
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const binaryData = items[0].binary.data;\nconst base64Audio = binaryData.data;\n\nreturn [{\n  json: {\n    ...items[0].json,\n    audio_base64: base64Audio\n  }\n}];"
+      },
+      "id": "6f955dbd-0df8-408a-b79e-d9bb393da3f2",
+      "name": "Format TTS Result",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        9584,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "jobs",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $('Fetch TTS Job Before Update').item.json.id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "status",
+              "fieldValue": "done"
+            },
+            {
+              "fieldId": "result",
+              "fieldValue": "={{ { audio_base64: $json.audio_base64 } }}"
+            }
+          ]
+        }
+      },
+      "id": "1721fc19-1703-40b4-98fd-28f5c62b7eb6",
+      "name": "Update TTS Job (status=done)",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        9808,
+        320
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "projects",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $('Fetch TTS Job Before Update').item.json.project_id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "status",
+              "fieldValue": "tts"
+            }
+          ]
+        }
+      },
+      "id": "631c0b4a-f8d0-46c3-bedd-98b1f3372567",
+      "name": "Update Project (status=tts)",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        10032,
+        320
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "id-1",
+              "name": "project_id",
+              "value": "={{ $('Fetch Project Before Render').item.json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "id-2",
+              "name": "payload",
+              "value": "={{ { video_url: $('Fetch Project Before Render').item.json.assets?.find(a => a.type === 'raw_video')?.r2_url, audio_url: $('Fetch Project Before Render').item.json.assets?.find(a => a.type === 'voice_over')?.r2_url, text_overlay: JSON.parse($('Fetch Project Before Render').item.json.ai_result || '{}').script || '', callback_url: $('Workflow Configuration').item.json.webhook_callback_url } }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "20a69e98-6ba3-4dca-833d-85192c947873",
+      "name": "Prepare Render Job",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        11152,
+        128
+      ]
+    },
+    {
+      "parameters": {
+        "tableId": "jobs",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "project_id",
+              "fieldValue": "={{ $json.project_id }}"
+            },
+            {
+              "fieldId": "job_type",
+              "fieldValue": "render"
+            },
+            {
+              "fieldId": "status",
+              "fieldValue": "running"
+            },
+            {
+              "fieldId": "payload",
+              "fieldValue": "={{ $json.payload }}"
+            }
+          ]
+        }
+      },
+      "id": "f556d6a1-a59c-44fd-9de1-ef6885b481ca",
+      "name": "Create Render Job (status=running)",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        11376,
+        128
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Workflow Configuration').item.json.ffmpeg_server_url }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { job_id: $('Create Render Job (status=running)').item.json.id, project_id: $('Fetch Project Before Render').item.json.id, video_url: $('Prepare Render Job').item.json.payload.video_url, audio_url: $('Prepare Render Job').item.json.payload.audio_url, text_overlay: JSON.parse($('Fetch Project Before Render').item.json.ai_result || '{}').script || '', callback_url: $('Prepare Render Job').item.json.payload.callback_url } }}",
+        "options": {}
+      },
+      "id": "047b81ff-5524-4210-8e6c-e9a2a562e37f",
+      "name": "Send Render Request to FFmpeg Server",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        11600,
+        128
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "d84bd2f4-4f64-403f-b837-a48db3195bc2",
+        "options": {}
+      },
+      "id": "4e81e91e-e141-4183-b1b2-85eb7781ee83",
+      "name": "Render Callback Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        848,
+        -80
+      ],
+      "webhookId": "d84bd2f4-4f64-403f-b837-a48db3195bc2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "id-1",
+              "name": "job_id",
+              "value": "={{ $json.body.job_id }}",
+              "type": "string"
+            },
+            {
+              "id": "id-2",
+              "name": "project_id",
+              "value": "={{ $json.body.project_id }}",
+              "type": "string"
+            },
+            {
+              "id": "id-3",
+              "name": "status",
+              "value": "={{ $json.body.status }}",
+              "type": "string"
+            },
+            {
+              "id": "id-4",
+              "name": "video_url",
+              "value": "={{ $json.body.video_url }}",
+              "type": "string"
+            },
+            {
+              "id": "id-5",
+              "name": "error",
+              "value": "={{ $json.body.error || null }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "7c99c2d4-0f38-4871-8195-4ed52082290c",
+      "name": "Extract Render Callback Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1072,
+        -80
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "={{ $('Workflow Configuration').item.json.r2_bucket_url + '/final/' + $('Fetch Job by ID (Callback)').item.json.project_id + '/final_' + $('Fetch Job by ID (Callback)').item.json.id + '.mp4' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "video/mp4"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "video/mp4",
+        "body": "={{ $binary.data }}",
+        "options": {}
+      },
+      "id": "1b20b60d-0673-4079-9125-21aefc1c09af",
+      "name": "Upload Final Video to R2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        1728,
+        -176
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "jobs",
+        "returnAll": true,
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "project_id",
+              "condition": "eq",
+              "keyValue": "={{ $('Fetch Job by ID (Callback)').item.json.project_id }}"
+            },
+            {
+              "keyName": "job_type",
+              "condition": "eq",
+              "keyValue": "tts"
+            }
+          ]
+        }
+      },
+      "id": "e34c0a1f-5bdc-427f-8367-343bd984e4df",
+      "name": "Fetch TTS Job Final",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1920,
+        -176
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const base64 = items[0].json.result.audio_base64;\nreturn [{\n  json: items[0].json,\n  binary: {\n    data: {\n      data: base64,\n      mimeType: 'audio/mpeg'\n    }\n  }\n}];"
+      },
+      "id": "1b22fd04-6104-4ffc-bffb-f0ebcf4ea31a",
+      "name": "Move Audio to Binary",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2144,
+        -176
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "={{ $('Workflow Configuration').item.json.r2_bucket_url + '/assets/' + $json.project_id + '/audio_' + $json.id + '.mp3' }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "audio/mpeg"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "audio/mpeg",
+        "body": "={{ $binary.data }}",
+        "options": {}
+      },
+      "id": "8210e2dd-cf39-4756-9aa0-ad50ad8c7226",
+      "name": "Upload Audio Final",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        2352,
+        -176
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "id-1",
+              "name": "project_id",
+              "value": "={{ $('Fetch Job by ID (Callback)').item.json.project_id }}",
+              "type": "string"
+            },
+            {
+              "id": "id-2",
+              "name": "job_id",
+              "value": "={{ $('Fetch Job by ID (Callback)').item.json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "id-3",
+              "name": "r2_url",
+              "value": "={{ 'https://pub-320799089d11478aa6d3eae82057bd47.r2.dev/final/' + $('Fetch Job by ID (Callback)').item.json.project_id + '/final_' + $('Fetch Job by ID (Callback)').item.json.id + '.mp4' }}",
+              "type": "string"
+            },
+            {
+              "id": "id-4",
+              "name": "metadata",
+              "value": "={{ { render_timestamp: new Date().toISOString() } }}",
+              "type": "object"
+            },
+            {
+              "id": "id-5",
+              "name": "result",
+              "value": "={{ { final_video_url: 'https://pub-320799089d11478aa6d3eae82057bd47.r2.dev/final/' + $('Fetch Job by ID (Callback)').item.json.project_id + '/final_' + $('Fetch Job by ID (Callback)').item.json.id + '.mp4' } }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "0c23b116-8046-4881-a0a9-1f2ab6c36614",
+      "name": "Prepare Final Video Asset",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1920,
+        -176
+      ]
+    },
+    {
+      "parameters": {
+        "tableId": "assets",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "project_id",
+              "fieldValue": "={{ $json.project_id }}"
+            },
+            {
+              "fieldId": "type",
+              "fieldValue": "final_video"
+            },
+            {
+              "fieldId": "r2_url",
+              "fieldValue": "={{ $json.r2_url }}"
+            },
+            {
+              "fieldId": "metadata",
+              "fieldValue": "={{ $json.metadata }}"
+            }
+          ]
+        }
+      },
+      "id": "e01cd04a-aecb-40f4-a4f0-e8cc0caf2538",
+      "name": "Insert Asset (type=final_video)",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        2352,
+        -176
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "jobs",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $json.job_id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "status",
+              "fieldValue": "done"
+            },
+            {
+              "fieldId": "result",
+              "fieldValue": "={{ { final_video_url: $('Workflow Configuration').item.json.r2_bucket_url + '/final/' + $json.project_id + '/final_' + $('Fetch Job by ID (Callback)').item.json.id + '.mp4', audio_url: $('Upload Audio Final').item.json.data?.url || ($('Workflow Configuration').item.json.r2_bucket_url + '/assets/' + $json.project_id + '/audio_' + $json.id + '.mp3') } }}"
+            }
+          ]
+        }
+      },
+      "id": "b2b74d82-a92e-457a-8b66-2f24af47f950",
+      "name": "Update Render Job (status=done)",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        2576,
+        -176
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "projects",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $json.project_id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "status",
+              "fieldValue": "completed"
+            }
+          ]
+        }
+      },
+      "id": "1cef5570-34dc-450c-abc1-fb144f0eefa8",
+      "name": "Update Project (status=completed)",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        2800,
+        -176
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Video Received').item.json.message.chat.id }}",
+        "text": "={{ '✅ Your video is ready! Download: ' + $('Prepare Final Video Asset').item.json.r2_url }}",
+        "additionalFields": {}
+      },
+      "id": "eb39e419-03dd-4bcb-83a7-8d9be9a29714",
+      "name": "Send Completion Message",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        3024,
+        -176
+      ],
+      "webhookId": "79d4f889-56e8-4db2-ad54-0a0153f51f8d",
+      "credentials": {
+        "telegramApi": {
+          "id": "zKxiLvRbueIfvKt5",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "f5c4e1c4-2099-4cf9-845b-13fd52ceac08",
+      "name": "Respond to Render Callback",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        3248,
+        -176
+      ]
+    },
+    {
+      "parameters": {
+        "errorMessage": "={{ $json.message }}"
+      },
+      "id": "4202f1d2-e884-454a-ae33-517115388803",
+      "name": "Handle Vision Error",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        7344,
+        128
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "jobs",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $('Create Vision Job (status=running)').item.json.id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "status",
+              "fieldValue": "error"
+            },
+            {
+              "fieldId": "result",
+              "fieldValue": "={{ { error: $('HTTP Request').item.json.msg || 'Vision analysis failed' } }}"
+            }
+          ]
+        }
+      },
+      "id": "7cd5f1cb-1291-4dab-b80b-fa4ff4450917",
+      "name": "Update Vision Job (status=error)",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        6672,
+        128
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "projects",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ Number($json.project_id) }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "status",
+              "fieldValue": "failed"
+            }
+          ]
+        }
+      },
+      "id": "05eec1fd-4bb3-4994-b55a-7bb7e6ed0de9",
+      "name": "Update Project (status=failed)",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        6896,
+        128
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Video Received').item.json.message.chat.id }}",
+        "text": "={{ '��� Error processing your video: ' + ($json.error || 'Unknown error occurred') }}",
+        "additionalFields": {}
+      },
+      "id": "ab5436db-e7d1-4593-9008-4153a57dd42d",
+      "name": "Send Error Notification",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        7120,
+        128
+      ],
+      "webhookId": "f813bc83-881a-48cc-b85a-63e02ca29ec7",
+      "credentials": {
+        "telegramApi": {
+          "id": "zKxiLvRbueIfvKt5",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "projects",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "keyValue": "={{ $json.project_id }}"
+            }
+          ]
+        }
+      },
+      "id": "ac0d8dcb-eb31-45de-b782-a9b3b5e1dbcb",
+      "name": "Fetch Project Before Vision",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        5552,
+        320
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "id-1",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "ingested",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "55b4ed50-6832-4f00-9b62-6662f65aefa0",
+      "name": "Validate Status = ingested",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        6000,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "projects",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "keyValue": "={{ $('Update Project (status=analyzing, ai_result)').item.json.id }}"
+            }
+          ]
+        }
+      },
+      "id": "25ddf2da-da86-47b2-9e49-ded4e105736c",
+      "name": "Fetch Project Before TTS",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        7568,
+        320
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "id-1",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "analyzing",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "3306d337-d563-475c-ae56-dbc110180592",
+      "name": "Validate Status = analyzing",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        7792,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "projects",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "keyValue": "={{ $('Update Project (status=tts)').item.json.id }}"
+            }
+          ]
+        }
+      },
+      "id": "6c973d86-8d3b-4306-a13e-3c8df8eb43c1",
+      "name": "Fetch Project Before Render",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        10480,
+        224
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "id-1",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "tts",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "0cbbc9d3-63db-4372-a6ef-4d684acd9f22",
+      "name": "Validate Status = tts",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        10928,
+        224
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "jobs",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "keyValue": "={{ $json.job_id }}"
+            }
+          ]
+        }
+      },
+      "id": "d963683a-8794-422f-b860-02c345a186d5",
+      "name": "Fetch Job by ID (Callback)",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1296,
+        -80
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "id": "id-1",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "running",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "id-2",
+              "leftValue": "={{ $json.job_type }}",
+              "rightValue": "render",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "90579e8d-aec0-44ac-ab85-b4940038627a",
+      "name": "Validate Callback Job",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1504,
+        -80
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "jobs",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $json.job_id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "status",
+              "fieldValue": "error"
+            },
+            {
+              "fieldId": "result",
+              "fieldValue": "={{ $json.error }}"
+            }
+          ]
+        }
+      },
+      "id": "cdc6b316-f287-425a-8637-adb84411e243",
+      "name": "Log Invalid Callback",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        1728,
+        16
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "546588f7-9140-4ad6-8f85-3a2c2e5cf870",
+      "name": "Reject Invalid Callback",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        1920,
+        16
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "jobs",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $('Create Vision Job (status=running)').item.json.id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "status",
+              "fieldValue": "error"
+            },
+            {
+              "fieldId": "result",
+              "fieldValue": "={{ { error: 'Invalid state for vision processing' } }}"
+            }
+          ]
+        }
+      },
+      "id": "220f19fe-2f3e-415d-9900-f4f80f68d6c5",
+      "name": "Log State Mismatch (Vision)",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        6224,
+        416
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "errorMessage": "={{ $json.message }}"
+      },
+      "id": "9b64621a-9256-44fb-aa8b-aa6d39836ce9",
+      "name": "Stop Vision - Invalid State",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        6448,
+        416
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "jobs",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $('Create TTS Job (status=running)').item.json.id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "status",
+              "fieldValue": "error"
+            },
+            {
+              "fieldId": "result",
+              "fieldValue": "={{ { error: 'Invalid state for TTS processing' } }}"
+            }
+          ]
+        }
+      },
+      "id": "22adc2f1-dbd9-43dd-8116-c9776e612dd9",
+      "name": "Log State Mismatch (TTS)",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        8016,
+        416
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "errorMessage": "={{ $json.message }}"
+      },
+      "id": "041f86dc-b953-4e13-8d77-08fcb9c6bb86",
+      "name": "Stop TTS - Invalid State",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        8240,
+        416
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "jobs",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $('Create Render Job (status=running)').item.json.id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "status",
+              "fieldValue": "error"
+            },
+            {
+              "fieldId": "result",
+              "fieldValue": "={{ { error: 'Invalid state for render processing' } }}"
+            }
+          ]
+        }
+      },
+      "id": "3e2e8d9c-afce-4447-bc68-d9bb702e49b2",
+      "name": "Log State Mismatch (Render)",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        11152,
+        320
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "errorMessage": "={{ $json.message }}"
+      },
+      "id": "4c2c13c1-f528-4a41-b26a-cd66ad2687bf",
+      "name": "Stop Render - Invalid State",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        11376,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "jobs",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $('Fetch TTS Job Before Update').item.json.id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "status",
+              "fieldValue": "error"
+            },
+            {
+              "fieldId": "result",
+              "fieldValue": "={{ $json.error }}"
+            }
+          ]
+        }
+      },
+      "id": "19135436-b488-4e33-a608-55e6ad3721c3",
+      "name": "Update TTS Job (status=error)",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        9360,
+        96
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "projects",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $('Fetch TTS Job Before Update').item.json.project_id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "status",
+              "fieldValue": "failed"
+            }
+          ]
+        }
+      },
+      "id": "2d865df0-3219-4b35-b359-9f55a2be9240",
+      "name": "Update Project (status=failed) - TTS",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        9584,
+        96
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Video Received').item.json.message.chat.id }}",
+        "text": "={{ '❌ TTS Error: ' + ($json.error || 'Failed to generate voice-over') }}",
+        "additionalFields": {}
+      },
+      "id": "cb25c482-5d1c-4c7d-84e5-dd3220f7af5e",
+      "name": "Send TTS Error Notification",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        9808,
+        96
+      ],
+      "webhookId": "17b9f57c-6211-4da2-8596-662a3665c25e",
+      "credentials": {
+        "telegramApi": {
+          "id": "zKxiLvRbueIfvKt5",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "jobs",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $('Create Render Job (status=running)').item.json.id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "status",
+              "fieldValue": "error"
+            },
+            {
+              "fieldId": "result",
+              "fieldValue": "={{ $json.error }}"
+            }
+          ]
+        }
+      },
+      "id": "9ca3ad90-c577-46ff-a70e-900ce0b93d3a",
+      "name": "Update Render Job (status=error)",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        12064,
+        128
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "projects",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $('Fetch Project Before Render').item.json.id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "status",
+              "fieldValue": "failed"
+            }
+          ]
+        }
+      },
+      "id": "856f357f-4563-48f1-91be-8d3d35d6ef06",
+      "name": "Update Project (status=failed) - Render",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        12288,
+        128
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Video Received').item.json.message.chat.id }}",
+        "text": "={{ '❌ Render Error: ' + ($json.error || 'Failed to render video') }}",
+        "additionalFields": {}
+      },
+      "id": "599b33be-6543-490d-b0c2-76580a65c843",
+      "name": "Send Render Error Notification",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        12512,
+        128
+      ],
+      "webhookId": "27745de3-3139-4d64-abd6-5f9e78eaa4a8",
+      "credentials": {
+        "telegramApi": {
+          "id": "zKxiLvRbueIfvKt5",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "jobs",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $('Fetch TTS Job Before Update').item.json.id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "status",
+              "fieldValue": "error"
+            },
+            {
+              "fieldId": "result",
+              "fieldValue": "={{ $json.error }}"
+            }
+          ]
+        }
+      },
+      "id": "00936f63-d24e-4f23-a834-2d36c42eee33",
+      "name": "Update R2 Upload Job (status=error)",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3360,
+        -448
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "projects",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $('Fetch TTS Job Before Update').item.json.project_id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "status",
+              "fieldValue": "failed"
+            }
+          ]
+        }
+      },
+      "id": "2d4acfcf-fa74-4b3d-9360-6e39fc4bc6a3",
+      "name": "Update Project (status=failed) - R2",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3552,
+        -448
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Video Received').item.json.message.chat.id }}",
+        "text": "={{ '❌ Upload Error: ' + ($json.error || 'Failed to upload to R2') }}",
+        "additionalFields": {}
+      },
+      "id": "088afd04-2823-41e4-9d47-9bfb81387ba8",
+      "name": "Send R2 Error Notification",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        3760,
+        -448
+      ],
+      "webhookId": "18a703cd-1fc3-46de-bc0a-88b913dc6eb1",
+      "credentials": {
+        "telegramApi": {
+          "id": "zKxiLvRbueIfvKt5",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "id-1",
+              "name": "id",
+              "value": "={{ $('Fetch Project Before Vision').item.json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "id-2",
+              "name": "status",
+              "value": "={{ $('Fetch Project Before Vision').item.json.status }}",
+              "type": "string"
+            },
+            {
+              "id": "id-3",
+              "name": "job_id",
+              "value": "={{ $('Create Vision Job (status=running)').item.json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "id-4",
+              "name": "payload",
+              "value": "={{ $('Create Vision Job (status=running)').item.json.payload }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "58e9ad17-f9e2-46dc-b97c-c7ac1f17fe26",
+      "name": "Merge Project with Job Data (Vision)",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        5776,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "id-1",
+              "name": "id",
+              "value": "={{ $('Fetch Project Before TTS').item.json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "id-2",
+              "name": "status",
+              "value": "={{ $('Fetch Project Before TTS').item.json.status }}",
+              "type": "string"
+            },
+            {
+              "id": "id-3",
+              "name": "ai_result",
+              "value": "={{ $('Fetch Project Before TTS').item.json.ai_result }}",
+              "type": "string"
+            },
+            {
+              "id": "id-4",
+              "name": "assets",
+              "value": "={{ $('Fetch Project Before TTS').item.json.assets }}",
+              "type": "array"
+            },
+            {
+              "id": "id-5",
+              "name": "job_id",
+              "value": "={{ $('Fetch TTS Job Before Update').item.json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "id-6",
+              "name": "payload",
+              "value": "={{ JSON.stringify({ script: $('Fetch TTS Job Before Update').item.json.payload, voice: 'shimmer' }) }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "3894340c-fadb-4eb5-abaa-742a7271b5ef",
+      "name": "Merge Project with Job Data (TTS)",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        8688,
+        128
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "id-1",
+              "name": "id",
+              "value": "={{ $('Fetch Project Before Render').item.json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "id-2",
+              "name": "status",
+              "value": "={{ $('Fetch Project Before Render').item.json.status }}",
+              "type": "string"
+            },
+            {
+              "id": "id-3",
+              "name": "assets",
+              "value": "={{ JSON.stringify($('Fetch Project Before Render').item.json.assets) }}",
+              "type": "array"
+            },
+            {
+              "id": "id-4",
+              "name": "text_overlay",
+              "value": "={{ JSON.parse($('Fetch Project Before Render').item.json.ai_result || '{}').script || '' }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "88b79b8e-a695-4ffe-b5c9-6855b138b93b",
+      "name": "Merge Project with Job Data (Render)",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        10704,
+        224
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "id-1",
+              "leftValue": "={{ $json.data }}",
+              "operator": {
+                "type": "object",
+                "operation": "exists"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "ce66b8bc-1146-4ab9-8125-f9cf05cbf418",
+      "name": "Check Vision Success",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        6448,
+        224
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "id-1",
+              "leftValue": "={{ $binary.data }}",
+              "operator": {
+                "type": "object",
+                "operation": "exists"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "0639c2a4-70c9-4fef-81e1-185ffe4e9d2b",
+      "name": "Check TTS Success",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        9136,
+        224
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "id-1",
+              "leftValue": "={{ $json.statusCode }}",
+              "rightValue": "200",
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "953e29cc-149d-4550-bb3e-482d1001639a",
+      "name": "Check Render Request Success",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        11824,
+        128
+      ]
+    },
+    {
+      "parameters": {
+        "errorMessage": "={{ $json.message }}"
+      },
+      "id": "e75de31d-bebc-4508-84ac-dd321c618b12",
+      "name": "Stop TTS Error",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        10032,
+        96
+      ]
+    },
+    {
+      "parameters": {
+        "errorMessage": "={{ $json.message }}"
+      },
+      "id": "6e2b5e3a-17d2-4eaa-a0de-9fc6b511be3a",
+      "name": "Stop Render Error",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        12736,
+        128
+      ]
+    },
+    {
+      "parameters": {
+        "errorMessage": "={{ $json.message }}"
+      },
+      "id": "402e5182-010e-447f-b563-d8bd933ccad6",
+      "name": "Stop R2 Error",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        3936,
+        -448
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ !!($json.message?.video || $json.video || $json.message?.document?.mime_type?.startsWith('video/') || $json.document?.mime_type?.startsWith('video/')) }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true"
+                    },
+                    "id": "id-1"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Video Flow"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.message.text }}",
+                    "rightValue": "/",
+                    "operator": {
+                      "type": "string",
+                      "operation": "startsWith"
+                    },
+                    "id": "id-2"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Command Flow"
+            }
+          ]
+        },
+        "looseTypeValidation": true,
+        "options": {
+          "fallbackOutput": "extra",
+          "renameFallbackOutput": "AI Conversational Agent"
+        }
+      },
+      "id": "b3715288-3f0f-4c12-989f-ec691681c744",
+      "name": "Route Message Type",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        848,
+        800
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.message.chat.id }}",
+        "text": "={{ 'Halo ' + $json.message.from.first_name + '! Saya asisten AI Video Anda. Untuk mulai membuat video affiliate, silakan kirim/upload file videonya ke sini ya! 😊' }}",
+        "additionalFields": {}
+      },
+      "id": "3dd1e995-16f3-4fba-a460-f57feb5a25d7",
+      "name": "Send Welcome Message",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1296,
+        816
+      ],
+      "webhookId": "cc18852f-1d6e-4227-a298-5b9d628d85ed",
+      "credentials": {
+        "telegramApi": {
+          "id": "zKxiLvRbueIfvKt5",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('Telegram Video Received').item.json.message.text }}",
+        "options": {
+          "systemMessage": "Anda adalah asisten cerdas untuk Video Automation Engine. Gunakan bahasa Indonesia yang ramah, gaul tapi sopan, dan manusiawi. Bantu pengguna memahami bahwa bot ini bisa mengubah video mentah menjadi video affiliate otomatis. Jika mereka bingung cara mulai, suruh mereka kirim file video langsung. Gunakan Telegram Response Tool untuk membalas pesan pengguna."
+        }
+      },
+      "id": "3b87da51-faca-47f1-b3e4-b00b286dc5a9",
+      "name": "AI Conversational Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        848,
+        1072
+      ]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "id": "29ad9d6b-33c0-4cc0-9349-b92d8c5aed73",
+      "name": "OpenAI GPT-4o-mini",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        848,
+        1248
+      ]
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Telegram Video Received').item.json.message.chat.id }}",
+        "contextWindowLength": 10
+      },
+      "id": "84419b31-175b-44db-8b43-f63884e198a5",
+      "name": "Conversation Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        944,
+        1392
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Video Received').item.json.message.chat.id }}",
+        "text": "={{ $('AI Conversational Agent').item.json.output }}",
+        "additionalFields": {}
+      },
+      "id": "3a936cd9-ee4a-4d25-bd61-d0f0aae0de0c",
+      "name": "Send AI Response to Telegram",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1296,
+        1072
+      ],
+      "webhookId": "a3f20cbf-c6ae-4fc9-9315-20e6a02d9a8f",
+      "credentials": {
+        "telegramApi": {
+          "id": "zKxiLvRbueIfvKt5",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Video Received').item.json.message.chat.id }}",
+        "text": "Video diterima! 📥 Sedang menganalisis konten...",
+        "additionalFields": {}
+      },
+      "id": "408a7301-a115-4fca-b15f-e0333662440c",
+      "name": "Feedback: Ingested",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        848,
+        368
+      ],
+      "webhookId": "cd9bfe94-bfdb-4132-9ebd-ed5c585a5424",
+      "alwaysOutputData": true,
+      "credentials": {
+        "telegramApi": {
+          "id": "zKxiLvRbueIfvKt5",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Video Received').item.json.message.chat.id }}",
+        "text": "Selesai menganalisis. Sedang menyiapkan pengisi suara... 🎙️",
+        "additionalFields": {}
+      },
+      "id": "00b9cfaa-9c45-472b-845f-79eaae2eca31",
+      "name": "Feedback: Vision Done",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        7344,
+        320
+      ],
+      "webhookId": "15db42a3-a546-4a22-9650-57825ea57435",
+      "credentials": {
+        "telegramApi": {
+          "id": "zKxiLvRbueIfvKt5",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Video Received').item.json.message.chat.id }}",
+        "text": "Pengisi suara siap. Sedang merender video final... 🎬",
+        "additionalFields": {}
+      },
+      "id": "9720430f-fad9-41f8-b773-a61b456efe81",
+      "name": "Feedback: TTS Done",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        10256,
+        224
+      ],
+      "webhookId": "c17420bd-0ccf-481c-87bb-14955e565918",
+      "credentials": {
+        "telegramApi": {
+          "id": "zKxiLvRbueIfvKt5",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e601c923-7399-408b-ba3e-b84ba45c9844",
+              "name": "video_to_split",
+              "value": "={{ [JSON.parse($('Mark Ingested').item.json.telegram_metadata).file_id] }}",
+              "type": "array"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3536,
+        320
+      ],
+      "id": "7381901f-7ebf-4807-aa12-1b2a4d90e3ed",
+      "name": "Bridge Video Data"
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "fileId": "={{ $json.video_to_split }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        3984,
+        320
+      ],
+      "id": "755e63bf-5e37-4e61-894e-72b71ac84b6a",
+      "name": "Get a file",
+      "webhookId": "5aacdb15-02bb-4d08-b251-e1c052d2ad72",
+      "credentials": {
+        "telegramApi": {
+          "id": "zKxiLvRbueIfvKt5",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "upload",
+        "bucketName": "telegramvideoai",
+        "fileName": "={{ 'raw/' + $('Mark Ingested').item.json.id + '/' + $('Get a file').item.json.result.file_id + '.mp4' }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.s3",
+      "typeVersion": 1,
+      "position": [
+        4208,
+        320
+      ],
+      "id": "e4a06004-30ba-443c-a3a8-d4150966ee0e",
+      "name": "Upload a file",
+      "credentials": {
+        "s3": {
+          "id": "rYr4MEwA5oesjyaU",
+          "name": "S3 account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.kie.ai/gemini-3-flash/v1/chat/completions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ {\n  \"messages\": [\n    {\n      \"role\": \"developer\",\n      \"content\": [\n        {\n          \"type\": \"text\",\n          \"text\": \"Anda adalah editor video profesional untuk TikTok dan Reels. Tugas Anda adalah menganalisis satu atau beberapa video mentah (raw) dan menentukan potongan klip terbaik untuk membuat video promosi affiliate yang viral. Fokus pada gerakan tangan yang jelas, visual produk yang tajam, dan demonstrasi penggunaan. Hindari bagian blur atau kamera goyang. Kembalikan hasil analisis dalam format JSON terstruktur dengan field: analysis_summary (ringkasan analisis), cuts (array berisi start, end dalam detik, dan label untuk setiap potongan), script (narasi persuasif dan energik), dan mood_vibe (pilih salah satu: Excited, Cinematic, Fast-Paced, Educational).\"\n        }\n      ]\n    },\n    {\n      \"role\": \"user\",\n      \"content\": [\n        {\n          \"type\": \"text\",\n          \"text\": \"Tonton video-video ini. Pilihkan potongan klip (start & end dalam detik) untuk membuat video promosi berdurasi 15-20 detik. Buatkan juga skrip narasi yang persuasif dan energik yang sesuai dengan durasi klip tersebut. Pastikan output dalam format JSON yang sesuai dengan schema.\"\n        },\n        {\n          \"type\": \"image_url\",\n          \"image_url\": {\n            \"url\": $json.payload.assets[0].r2_url\n          }\n        }\n      ]\n    }\n  ],\n  \"stream\": false,\n  \"response_format\": {\n    \"type\": \"json_schema\",\n    \"json_schema\": {\n      \"name\": \"editing_instruction\",\n      \"strict\": true,\n      \"schema\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"analysis_summary\": {\n            \"type\": \"string\",\n            \"description\": \"Ringkasan analisis video mentah\"\n          },\n          \"cuts\": {\n            \"type\": \"array\",\n            \"description\": \"Daftar potongan klip yang dipilih\",\n            \"items\": {\n              \"type\": \"object\",\n              \"properties\": {\n                \"start\": {\n                  \"type\": \"number\",\n                  \"description\": \"Waktu mulai dalam detik\"\n                },\n                \"end\": {\n                  \"type\": \"number\",\n                  \"description\": \"Waktu selesai dalam detik\"\n                },\n                \"label\": {\n                  \"type\": \"string\",\n                  \"description\": \"Label deskriptif untuk potongan ini\"\n                }\n              },\n              \"required\": [\"start\", \"end\", \"label\"],\n              \"additionalProperties\": false\n            }\n          },\n          \"script\": {\n            \"type\": \"string\",\n            \"description\": \"Skrip narasi persuasif dan energik untuk voice-over\"\n          },\n          \"mood_vibe\": {\n            \"type\": \"string\",\n            \"description\": \"Suasana dan vibe video\",\n            \"enum\": [\"Excited\", \"Cinematic\", \"Fast-Paced\", \"Educational\"]\n          }\n        },\n        \"required\": [\"analysis_summary\", \"cuts\", \"script\", \"mood_vibe\"],\n        \"additionalProperties\": false\n      }\n    }\n  }\n} }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        6224,
+        224
+      ],
+      "id": "e691f835-0e28-425f-adaf-b7b7703ba66a",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "tableId": "jobs",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "keyValue": "={{ $('Create TTS Job (status=running)').item.json.id }}"
+            }
+          ]
+        }
+      },
+      "id": "0e5aaeab-2c67-499f-936e-bc7a6bac1a69",
+      "name": "Fetch TTS Job Before Update",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        8464,
+        128
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.kie.ai/api/v1/jobs/createTask",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"elevenlabs/text-to-speech-multilingual-v2\",\n  \"input\": {\n    \"text\": \"{{ $json.payload }}\",\n  \"voice\": \"2zRM7PkgwBPiau2jvVXc\",\n  \"stability\": 0.55,\n  \"similarity_boost\": 0.72,\n  \"style\": 0.5,\n  \"speed\": 1.03,\n  \"timestamps\": true,\n  \"language_code\": \"id\"\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        8464,
+        368
+      ],
+      "id": "1cfaaf60-5c13-4d23-aeb1-25609ffcf754",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.kie.ai/api/v1/jobs/recordInfo",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "taskId",
+              "value": "={{ $json.data.taskId }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        8928,
+        368
+      ],
+      "id": "def5cafc-ab14-4ece-b842-ba5a0b5d22a6",
+      "name": "HTTP Request2"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.data.resultJson ? JSON.parse($json.data.resultJson).resultUrls[0] : \"\" }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        8928,
+        224
+      ],
+      "id": "2315286d-2a3c-4973-ace0-83edbdbc0b83",
+      "name": "HTTP Request3"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.data.resultJson ? JSON.parse($json.data.resultJson).resultUrls[0] : \"\" }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        9360,
+        320
+      ],
+      "id": "c2f41d2d-289e-41cf-bf02-fd48df22364e",
+      "name": "Download TTS Audio"
+    },
+    {
+      "parameters": {
+        "amount": 10
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        8688,
+        368
+      ],
+      "id": "9c7ba654-d86e-4935-b885-e4f96dc7cac9",
+      "name": "Wait",
+      "webhookId": "b71b7f60-a607-4f62-9662-f7ae287aeb3a"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "cond1",
+              "leftValue": "={{ $json.callback_query }}",
+              "rightValue": "",
+              "operator": {
+                "type": "object",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "59efe954-b59b-404b-b496-b99a8e882ca4",
+      "name": "Router: Message vs Callback",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2176,
+        352
+      ]
+    },
+    {
+      "parameters": {
+        "tableId": "projects",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "user_id",
+              "fieldValue": "={{ $('Prepare User ID').item.json.user_id }}"
+            },
+            {
+              "fieldId": "status",
+              "fieldValue": "draft"
+            },
+            {
+              "fieldId": "title",
+              "fieldValue": "Draft Project"
+            },
+            {
+              "fieldId": "telegram_metadata",
+              "fieldValue": "={{ JSON.stringify({ chat_id: $('Prepare User ID').item.json.chat_id, message_id: $('Prepare User ID').item.json.message_id, file_id: $('Prepare User ID').item.json.video_file_id }) }}"
+            }
+          ]
+        }
+      },
+      "id": "43090ac1-2a59-4e92-9ab6-57de95d0dcc3",
+      "name": "Create Draft Project",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        2400,
+        528
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "projects",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "keyValue": "={{ $json.project_id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "preferences",
+              "fieldValue": "={{ $json.new_preferences }}"
+            },
+            {
+              "fieldId": "status",
+              "fieldValue": "={{ $json.next_status }}"
+            }
+          ]
+        }
+      },
+      "id": "7730b908-0a63-4fd7-9a08-03ee5f12dccf",
+      "name": "Update User Selection",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        2608,
+        336
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "let cb = items[0].json.callback_query;\n\n// Fallback: Try to get from trigger node if missing in current item\nif (!cb) {\n  try {\n    cb = $('Telegram Video Received').first().json.callback_query;\n  } catch (e) {\n    // Ignore error if node not found or empty\n  }\n}\n\nif (!cb || !cb.data) {\n  return [{ json: { error: 'No callback query found', original_item: items[0].json } }];\n}\n\nconst parts = cb.data.split('_');\nconst prefix = parts[0];\nconst value = parts[1];\nreturn [{ json: { callback: cb, prefix, value } }];"
+      },
+      "id": "10d6ab1a-23b9-4c66-acd6-08220c98c30a",
+      "name": "Parse Callback",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2400,
+        336
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const prefs = items[0].json.preferences || {};\nconst lastStep = items[0].json.prefix; // e.g. 'style'\n\nlet nextStep = '';\nlet text = '';\nlet buttons = [];\nlet isFinish = false;\n\nif (!lastStep) { // Init\n  nextStep = 'style';\n  text = 'Select Video Style:';\n  buttons = [\n    { text: 'Hard Selling', callback_data: 'style_hard_selling' },\n    { text: 'Storytelling', callback_data: 'style_storytelling' },\n    { text: 'Soft Review', callback_data: 'style_soft_review' }\n  ];\n} else if (lastStep === 'style') {\n  nextStep = 'tone';\n  text = 'Select Tone:';\n  buttons = [\n    { text: 'Energetic', callback_data: 'tone_energetic' },\n    { text: 'Neutral', callback_data: 'tone_neutral' },\n    { text: 'Soft', callback_data: 'tone_soft' }\n  ];\n} else if (lastStep === 'tone') {\n  nextStep = 'duration';\n  text = 'Select Duration:';\n  buttons = [\n    { text: '15s', callback_data: 'duration_15' },\n    { text: '30s', callback_data: 'duration_30' },\n    { text: '60s', callback_data: 'duration_60' }\n  ];\n} else if (lastStep === 'duration') {\n  nextStep = 'platform';\n  text = 'Select Platform:';\n  buttons = [\n    { text: 'TikTok', callback_data: 'platform_tiktok' },\n    { text: 'Instagram', callback_data: 'platform_instagram' },\n    { text: 'Shopee', callback_data: 'platform_shopee' }\n  ];\n} else {\n  isFinish = true;\n}\n\nreturn [{ json: { text, buttons, isFinish, project_id: items[0].json.id } }];"
+      },
+      "id": "1d5116e9-1401-43ce-9d37-362412f20449",
+      "name": "Determine Next Question",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2832,
+        336
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ $json.isFinish }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "9fa19665-d1d9-4576-9382-dcefe0003cd9",
+      "name": "Is Wizard Finished?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        3040,
+        336
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.message.chat.id }}",
+        "text": "Welcome! Let's set up your video.\n\nSelect Video Style:",
+        "replyMarkup": "inlineKeyboard",
+        "inlineKeyboard": {
+          "rows": [
+            {}
+          ]
+        },
+        "additionalFields": {}
+      },
+      "id": "f39de751-5624-409c-891b-e55218ce0fef",
+      "name": "Send Wizard Step 1",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        2608,
+        528
+      ],
+      "webhookId": "init-wizard-webhook",
+      "credentials": {
+        "telegramApi": {
+          "id": "zKxiLvRbueIfvKt5",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "editMessageText",
+        "chatId": "={{ JSON.parse($('Create Draft Project').item.json.telegram_metadata).chat_id }}",
+        "messageId": "={{ JSON.parse($('Create Draft Project').item.json.telegram_metadata).message_id }}",
+        "replyMarkup": "inlineKeyboard",
+        "text": "={{ $json.text }}",
+        "inlineKeyboard": {
+          "rows": [
+            {}
+          ]
+        },
+        "additionalFields": {}
+      },
+      "id": "2dca5883-f821-40d1-903e-4d9731684260",
+      "name": "Update Wizard UI",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        3296,
+        224
+      ],
+      "webhookId": "2bbe9f2d-8e78-44e1-959a-7cbf47aea0da",
+      "credentials": {
+        "telegramApi": {
+          "id": "zKxiLvRbueIfvKt5",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "tableId": "projects",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "keyValue": "={{ $json.project_id }}"
+            }
+          ]
+        },
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "status",
+              "fieldValue": "ingested"
+            }
+          ]
+        }
+      },
+      "id": "7d681702-6e11-465e-9245-cf58e99bf6b0",
+      "name": "Mark Ingested",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        3296,
+        448
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "zzWgQHlA9X1EO3Lv",
+          "name": "Supabase account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Telegram Video Received": {
+      "main": [
+        [
+          {
+            "node": "Extract Telegram Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Router: Message vs Callback": {
+      "main": [
+        [
+          {
+            "node": "Create Draft Project",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Parse Callback",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Draft Project": {
+      "main": [
+        [
+          {
+            "node": "Send Wizard Step 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Callback": {
+      "main": [
+        [
+          {
+            "node": "Update User Selection",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update User Selection": {
+      "main": [
+        [
+          {
+            "node": "Determine Next Question",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Determine Next Question": {
+      "main": [
+        [
+          {
+            "node": "Is Wizard Finished?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Wizard Finished?": {
+      "main": [
+        [
+          {
+            "node": "Mark Ingested",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update Wizard UI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark Ingested": {
+      "main": [
+        [
+          {
+            "node": "Bridge Video Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Configuration": {
+      "main": [
+        [
+          {
+            "node": "Feedback: Ingested",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Feedback: Ingested": {
+      "main": [
+        [
+          {
+            "node": "Extract Telegram Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Telegram Data": {
+      "main": [
+        [
+          {
+            "node": "Check User Exists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check User Exists": {
+      "main": [
+        [
+          {
+            "node": "User Exists?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "User Exists?": {
+      "main": [
+        [
+          {
+            "node": "Prepare User ID",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create New User",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create New User": {
+      "main": [
+        [
+          {
+            "node": "Prepare User ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare User ID": {
+      "main": [
+        [
+          {
+            "node": "Router: Message vs Callback",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Video Files": {
+      "main": [
+        [
+          {
+            "node": "Get a file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Asset Record": {
+      "main": [
+        [
+          {
+            "node": "Insert Asset (type=raw_video)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert Asset (type=raw_video)": {
+      "main": [
+        [
+          {
+            "node": "Aggregate All Assets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate All Assets": {
+      "main": [
+        [
+          {
+            "node": "Prepare Vision Job",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Vision Job": {
+      "main": [
+        [
+          {
+            "node": "Create Vision Job (status=running)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Vision Job (status=running)": {
+      "main": [
+        [
+          {
+            "node": "Fetch Project Before Vision",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structure Vision Result": {
+      "main": [
+        [
+          {
+            "node": "Update Vision Job (status=done)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Vision Job (status=done)": {
+      "main": [
+        [
+          {
+            "node": "Update Project (status=analyzing, ai_result)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Project (status=analyzing, ai_result)": {
+      "main": [
+        [
+          {
+            "node": "Feedback: Vision Done",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Feedback: Vision Done": {
+      "main": [
+        [
+          {
+            "node": "Fetch Project Before TTS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare TTS Job": {
+      "main": [
+        [
+          {
+            "node": "Create TTS Job (status=running)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create TTS Job (status=running)": {
+      "main": [
+        [
+          {
+            "node": "Fetch TTS Job Before Update",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update TTS Job (status=done)": {
+      "main": [
+        [
+          {
+            "node": "Update Project (status=tts)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Project (status=tts)": {
+      "main": [
+        [
+          {
+            "node": "Feedback: TTS Done",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Feedback: TTS Done": {
+      "main": [
+        [
+          {
+            "node": "Fetch Project Before Render",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Render Job": {
+      "main": [
+        [
+          {
+            "node": "Create Render Job (status=running)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Render Job (status=running)": {
+      "main": [
+        [
+          {
+            "node": "Send Render Request to FFmpeg Server",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Render Callback Webhook": {
+      "main": [
+        [
+          {
+            "node": "Extract Render Callback Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Render Callback Data": {
+      "main": [
+        [
+          {
+            "node": "Fetch Job by ID (Callback)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload Final Video to R2": {
+      "main": [
+        [
+          {
+            "node": "Fetch TTS Job Final",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch TTS Job Final": {
+      "main": [
+        [
+          {
+            "node": "Move Audio to Binary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Move Audio to Binary": {
+      "main": [
+        [
+          {
+            "node": "Upload Audio Final",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload Audio Final": {
+      "main": [
+        [
+          {
+            "node": "Update Render Job (status=done)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Render Job (status=done)": {
+      "main": [
+        [
+          {
+            "node": "Update Project (status=completed)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Project (status=completed)": {
+      "main": [
+        [
+          {
+            "node": "Send Completion Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Completion Message": {
+      "main": [
+        [
+          {
+            "node": "Respond to Render Callback",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Vision Job (status=error)": {
+      "main": [
+        [
+          {
+            "node": "Update Project (status=failed)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Project (status=failed)": {
+      "main": [
+        [
+          {
+            "node": "Send Error Notification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Error Notification": {
+      "main": [
+        [
+          {
+            "node": "Handle Vision Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Project Before Vision": {
+      "main": [
+        [
+          {
+            "node": "Merge Project with Job Data (Vision)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge Project with Job Data (Vision)": {
+      "main": [
+        [
+          {
+            "node": "Validate Status = ingested",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Status = ingested": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Log State Mismatch (Vision)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Log State Mismatch (Vision)": {
+      "main": [
+        [
+          {
+            "node": "Stop Vision - Invalid State",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Project Before TTS": {
+      "main": [
+        [
+          {
+            "node": "Validate Status = analyzing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge Project with Job Data (TTS)": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Status = analyzing": {
+      "main": [
+        [
+          {
+            "node": "Prepare TTS Job",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Log State Mismatch (TTS)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Log State Mismatch (TTS)": {
+      "main": [
+        [
+          {
+            "node": "Stop TTS - Invalid State",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Project Before Render": {
+      "main": [
+        [
+          {
+            "node": "Merge Project with Job Data (Render)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge Project with Job Data (Render)": {
+      "main": [
+        [
+          {
+            "node": "Validate Status = tts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Status = tts": {
+      "main": [
+        [
+          {
+            "node": "Prepare Render Job",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Log State Mismatch (Render)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Log State Mismatch (Render)": {
+      "main": [
+        [
+          {
+            "node": "Stop Render - Invalid State",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Job by ID (Callback)": {
+      "main": [
+        [
+          {
+            "node": "Validate Callback Job",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Callback Job": {
+      "main": [
+        [
+          {
+            "node": "Upload Final Video to R2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Log Invalid Callback",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Log Invalid Callback": {
+      "main": [
+        [
+          {
+            "node": "Reject Invalid Callback",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update TTS Job (status=error)": {
+      "main": [
+        [
+          {
+            "node": "Update Project (status=failed) - TTS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Project (status=failed) - TTS": {
+      "main": [
+        [
+          {
+            "node": "Send TTS Error Notification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Render Job (status=error)": {
+      "main": [
+        [
+          {
+            "node": "Update Project (status=failed) - Render",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Project (status=failed) - Render": {
+      "main": [
+        [
+          {
+            "node": "Send Render Error Notification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update R2 Upload Job (status=error)": {
+      "main": [
+        [
+          {
+            "node": "Update Project (status=failed) - R2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Project (status=failed) - R2": {
+      "main": [
+        [
+          {
+            "node": "Send R2 Error Notification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Vision Success": {
+      "main": [
+        [
+          {
+            "node": "Structure Vision Result",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update Vision Job (status=error)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check TTS Success": {
+      "main": [
+        [
+          {
+            "node": "Download TTS Audio",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update TTS Job (status=error)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send TTS Error Notification": {
+      "main": [
+        [
+          {
+            "node": "Stop TTS Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format TTS Result": {
+      "main": [
+        [
+          {
+            "node": "Update TTS Job (status=done)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send R2 Error Notification": {
+      "main": [
+        [
+          {
+            "node": "Stop R2 Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Render Request to FFmpeg Server": {
+      "main": [
+        [
+          {
+            "node": "Check Render Request Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Render Request Success": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Update Render Job (status=error)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Render Error Notification": {
+      "main": [
+        [
+          {
+            "node": "Stop Render Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route Message Type": {
+      "main": [
+        [
+          {
+            "node": "Workflow Configuration",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Welcome Message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "AI Conversational Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI GPT-4o-mini": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Conversational Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Conversation Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Conversational Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Conversational Agent": {
+      "main": [
+        [
+          {
+            "node": "Send AI Response to Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Bridge Video Data": {
+      "main": [
+        [
+          {
+            "node": "Split Video Files",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a file": {
+      "main": [
+        [
+          {
+            "node": "Upload a file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload a file": {
+      "main": [
+        [
+          {
+            "node": "Prepare Asset Record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Check Vision Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch TTS Job Before Update": {
+      "main": [
+        [
+          {
+            "node": "Merge Project with Job Data (TTS)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request3": {
+      "main": [
+        [
+          {
+            "node": "Check TTS Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download TTS Audio": {
+      "main": [
+        [
+          {
+            "node": "Format TTS Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {},
+  "versionId": "f450d75e-baef-4b91-b708-3e17b17fd89e",
+  "activeVersionId": null,
+  "versionCounter": 61,
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2026-02-17T08:02:16.432Z",
+      "createdAt": "2026-02-17T08:02:16.432Z",
+      "role": "workflow:owner",
+      "workflowId": "d1uuHdrFwhViqDUk",
+      "projectId": "3ymR0iHxptXy6Sor",
+      "project": {
+        "updatedAt": "2026-02-17T08:00:30.978Z",
+        "createdAt": "2026-02-17T07:58:28.501Z",
+        "id": "3ymR0iHxptXy6Sor",
+        "name": "Kasirvip Official <kasirvipofficial@gmail.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "creatorId": "a608e98a-990b-4322-8f6d-0c729e6b0102",
+        "projectRelations": [
+          {
+            "updatedAt": "2026-02-17T07:58:28.501Z",
+            "createdAt": "2026-02-17T07:58:28.501Z",
+            "userId": "a608e98a-990b-4322-8f6d-0c729e6b0102",
+            "projectId": "3ymR0iHxptXy6Sor",
+            "user": {
+              "updatedAt": "2026-02-17T10:48:37.000Z",
+              "createdAt": "2026-02-17T07:58:27.841Z",
+              "id": "a608e98a-990b-4322-8f6d-0c729e6b0102",
+              "email": "kasirvipofficial@gmail.com",
+              "firstName": "Kasirvip",
+              "lastName": "Official",
+              "personalizationAnswers": {
+                "version": "v4",
+                "personalization_survey_submitted_at": "2026-02-17T08:01:32.067Z",
+                "personalization_survey_n8n_version": "2.7.5",
+                "automationGoalDevops": [
+                  "data-syncing"
+                ],
+                "companySize": "<20",
+                "companyType": "systems-integrator",
+                "role": "it",
+                "reportedSource": "google"
+              },
+              "settings": {
+                "userActivated": false,
+                "easyAIWorkflowOnboarded": true
+              },
+              "disabled": false,
+              "mfaEnabled": false,
+              "lastActiveAt": "2026-02-17",
+              "isPending": false
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [],
+  "activeVersion": null
+}

@@ -1,0 +1,79 @@
+{
+  "updatedAt": "2026-02-17T08:24:58.000Z",
+  "createdAt": "2026-02-17T08:15:24.030Z",
+  "id": "Z4jePus8nMxiSBKR",
+  "name": "Untitled-1771316045678",
+  "description": null,
+  "active": false,
+  "isArchived": true,
+  "nodes": [],
+  "connections": {},
+  "settings": {
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": null,
+  "versionId": "1a861d1e-5dff-4b51-8d83-25ed43f9985a",
+  "activeVersionId": null,
+  "versionCounter": 2,
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2026-02-17T08:15:24.036Z",
+      "createdAt": "2026-02-17T08:15:24.036Z",
+      "role": "workflow:owner",
+      "workflowId": "Z4jePus8nMxiSBKR",
+      "projectId": "3ymR0iHxptXy6Sor",
+      "project": {
+        "updatedAt": "2026-02-17T08:00:30.978Z",
+        "createdAt": "2026-02-17T07:58:28.501Z",
+        "id": "3ymR0iHxptXy6Sor",
+        "name": "Kasirvip Official <kasirvipofficial@gmail.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "creatorId": "a608e98a-990b-4322-8f6d-0c729e6b0102",
+        "projectRelations": [
+          {
+            "updatedAt": "2026-02-17T07:58:28.501Z",
+            "createdAt": "2026-02-17T07:58:28.501Z",
+            "userId": "a608e98a-990b-4322-8f6d-0c729e6b0102",
+            "projectId": "3ymR0iHxptXy6Sor",
+            "user": {
+              "updatedAt": "2026-02-17T10:48:37.000Z",
+              "createdAt": "2026-02-17T07:58:27.841Z",
+              "id": "a608e98a-990b-4322-8f6d-0c729e6b0102",
+              "email": "kasirvipofficial@gmail.com",
+              "firstName": "Kasirvip",
+              "lastName": "Official",
+              "personalizationAnswers": {
+                "version": "v4",
+                "personalization_survey_submitted_at": "2026-02-17T08:01:32.067Z",
+                "personalization_survey_n8n_version": "2.7.5",
+                "automationGoalDevops": [
+                  "data-syncing"
+                ],
+                "companySize": "<20",
+                "companyType": "systems-integrator",
+                "role": "it",
+                "reportedSource": "google"
+              },
+              "settings": {
+                "userActivated": false,
+                "easyAIWorkflowOnboarded": true
+              },
+              "disabled": false,
+              "mfaEnabled": false,
+              "lastActiveAt": "2026-02-17",
+              "isPending": false
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "tags": [],
+  "activeVersion": null
+}
